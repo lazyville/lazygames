@@ -2,46 +2,34 @@
 
 ### Local Development
 
-Run the site locally with Jekyll for quick iteration.
+Run the site locally with Docker (recommended) or Jekyll.
 
-Prerequisites
-- Ruby (2.7+ recommended; 3.x works)
-- Bundler (`gem install bundler`)
-- Alternatively: Docker (no Ruby required)
+Docker-first (recommended)
+- No local Ruby required.
+- Uses `jekyll/jekyll` image with `--rm` and current folder mounted as a volume.
 
-Setup
-1) Install gems
+Quick start (Docker)
+1) From this folder: `make docker-serve` (or `make docker-serve-open`)
+2) Open: http://localhost:4000
 
-```
-bundle install
-```
-
-2) Serve locally (with live reload, drafts, future posts)
-
-```
-bundle exec jekyll serve --livereload --drafts --future --incremental --baseurl ""
-```
-
-Open: http://localhost:4000
+Common Docker tasks
+- Serve: `make docker-serve` (live reload, drafts, future posts)
+- Serve and auto-open: `make docker-serve-open`
+- Build static site: `make docker-build`
+- Clean cache/site: `make docker-clean`
 
 Notes
-- `--baseurl ""` ensures links work locally despite `_config.yml` using `/lazygames` for GitHub Pages.
-- The site uses the remote theme `pages-themes/cayman`; the first run may fetch it.
+- `--rm` removes the container when stopped; no leftover containers.
+- Mounts current folder as volume so you edit files locally.
 
-Docker Option
-If you prefer not to install Ruby locally, use the official Jekyll image:
+Local Ruby (optional)
+- If you prefer local Ruby, use: `make serve`, `make build`, `make clean`
 
-```
-docker run --rm -it \
-  -p 4000:4000 \
-  -v "$PWD":/srv/jekyll \
-  jekyll/jekyll \
-  jekyll serve --livereload --drafts --future --incremental --baseurl ""
-```
-
-Common Tasks
-- Build only: `bundle exec jekyll build`
-- Clean cache/site: `bundle exec jekyll clean`
+Makefile Shortcuts (from this folder)
+- Serve: `make serve`
+- Build: `make build`
+- Clean: `make clean`
+- Docker serve: `make docker-serve`
 
 ### Deployment
 

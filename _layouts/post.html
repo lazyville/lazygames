@@ -2,7 +2,31 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
-<p class="post-meta">{{ page.date | date: "%Y-%m-%d" }} · <a href="{{ '/' | relative_url }}">Home</a></p>
+{%- comment -%}
+Header already renders page title/subtitle. Avoid duplicating in body.
+{%- endcomment -%}
+
+<p class="post-meta">{{ page.date | date: "%Y-%m-%d" }} · <a href="{{ '/' | relative_url }}">Home</a> · <a href="{{ '/feed.xml' | relative_url }}" type="application/rss+xml" aria-label="Subscribe to RSS" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
+  <svg style="width:14px;height:14px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <circle cx="6.18" cy="17.82" r="2.18" fill="#f26522"/>
+    <path d="M4 11a9 9 0 0 1 9 9h3A12 12 0 0 0 4 8v3z" fill="#f26522"/>
+    <path d="M4 6c9.39 0 17 7.61 17 17h3C24 11.85 12.15 0 4 0v6z" fill="#f26522"/>
+  </svg>
+  RSS
+</a></p>
+
+{% assign tags = page.tags %}
+{% if tags == nil or tags == empty %}
+  {% assign tags = page.categories %}
+{% endif %}
+{% if tags and tags != empty %}
+  <p class="post-meta">
+    {% for tag in tags %}
+      <span style="display:inline-block;background:#f1f8ff;border:1px solid #e1e4e8;color:#0366d6;border-radius:999px;padding:0.15rem 0.55rem;margin:0 0.25rem 0.25rem 0;font-size:0.85em;">{{ tag }}</span>
+    {% endfor %}
+  </p>
+{% endif %}
 
 {{ content }}
+
+{% include rss-footer.html %}

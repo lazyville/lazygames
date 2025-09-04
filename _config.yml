@@ -3,7 +3,18 @@ description: Game concepts and ideas
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
   - jekyll-remote-theme
+  - jekyll-feed
 
 # Update these if your repository owner/name differ
 url: https://lazyville.github.io
 baseurl: /lazygames
+repository: lazyville/lazygames
+
+# Homepage hero configuration
+hero_title: Lazygames
+hero_tagline: Inventive game concepts and prototypes
+# Use an anchor to jump to latest by default; change to "/feed.xml" after feed exists.
+hero_cta_url: /feed.xml
+hero_cta_label: Subscribe via RSS
+# Provide a default hero image; replace anytime.
+hero_image: https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1600&auto=format&fit=crop

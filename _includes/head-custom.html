@@ -1,0 +1,34 @@
+{%- comment -%}
+Custom meta description logic for posts/pages:
+1) page.description
+2) page.subtitle
+3) second part of title split by ' -- '
+4) excerpt (stripped + truncated)
+5) site.description fallback
+{%- endcomment -%}
+
+{%- assign raw_title = page.title | default: site.title -%}
+{%- assign desc = page.description -%}
+{%- if desc == nil or desc == '' -%}
+  {%- if page.layout == 'post' or page.layout == 'page' -%}
+    {%- if page.subtitle and page.subtitle != '' -%}
+      {%- assign desc = page.subtitle -%}
+    {%- else -%}
+      {%- assign parts = raw_title | split: ' -- ' -%}
+      {%- if parts.size > 1 -%}
+        {%- assign desc = parts[1] -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if desc == nil or desc == '' -%}
+      {%- assign desc = page.excerpt | strip_html | normalize_whitespace | truncate: 160 -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if desc == nil or desc == '' -%}
+  {%- assign desc = site.description -%}
+{%- endif -%}
+
+<meta name="description" content="{{ desc | escape }}">
+<meta property="og:description" content="{{ desc | escape }}">
+<meta name="twitter:description" content="{{ desc | escape }}">
+

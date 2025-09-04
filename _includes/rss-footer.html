@@ -1,0 +1,29 @@
+<div id="footer-rss" style="display:none">
+  <a href="{{ '/feed.xml' | relative_url }}" type="application/rss+xml" aria-label="Subscribe to RSS" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:rgba(255,255,255,0.9);color:#bf5700;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.05);font-weight:600;">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" style="width:16px;height:16px;display:inline-block">
+      <circle cx="6.18" cy="17.82" r="2.18" fill="#f26522"/>
+      <path d="M4 11a9 9 0 0 1 9 9h3A12 12 0 0 0 4 8v3z" fill="#f26522"/>
+      <path d="M4 6c9.39 0 17 7.61 17 17h3C24 11.85 12.15 0 4 0v6z" fill="#f26522"/>
+    </svg>
+    <span>RSS</span>
+  </a>
+</div>
+<script>
+(function(){
+  try {
+    var footer = document.querySelector('footer');
+    var pill = document.getElementById('footer-rss');
+    if(footer && pill){
+      pill.style.display = 'block';
+      // Wrap in a container aligned to the right
+      var wrap = document.createElement('div');
+      wrap.style.marginTop = '8px';
+      wrap.style.display = 'flex';
+      wrap.style.justifyContent = 'flex-end';
+      wrap.appendChild(pill);
+      footer.appendChild(wrap);
+    }
+  } catch(e) {}
+})();
+</script>
+

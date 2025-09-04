@@ -1,0 +1,71 @@
+<header class="page-header" role="banner">
+  <a class="rss-link" href="{{ '/feed.xml' | relative_url }}" type="application/rss+xml" aria-label="Subscribe to RSS">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle cx="6.18" cy="17.82" r="2.18" fill="#f26522"/>
+      <path d="M4 11a9 9 0 0 1 9 9h3A12 12 0 0 0 4 8v3z" fill="#f26522"/>
+      <path d="M4 6c9.39 0 17 7.61 17 17h3C24 11.85 12.15 0 4 0v6z" fill="#f26522"/>
+    </svg>
+    RSS
+  </a>
+
+  {%- assign display_title = site.hero_title | default: site.title -%}
+  {%- assign display_tagline = site.hero_tagline | default: site.description -%}
+  {%- assign raw_title = page.title | default: display_title -%}
+  {%- assign parts = raw_title | split: ' -- ' -%}
+  {%- if parts.size <= 1 -%}
+    {%- assign parts = raw_title | split: ' — ' -%}
+  {%- endif -%}
+  {%- if parts.size <= 1 -%}
+    {%- assign parts = raw_title | split: ' – ' -%}
+  {%- endif -%}
+  {%- assign is_post = page.collection == 'posts' or page.layout == 'post' -%}
+  {%- assign has_page_subtitle = page.subtitle and page.subtitle != '' -%}
+  {%- assign has_split_subtitle = parts.size > 1 -%}
+  {%- assign has_page_desc = page.description and page.description != '' -%}
+  {%- if is_post or has_page_subtitle or has_split_subtitle or has_page_desc -%}
+    {%- assign display_title = parts[0] | default: raw_title -%}
+    {%- if has_page_subtitle -%}
+      {%- assign display_tagline = page.subtitle -%}
+    {%- elsif has_split_subtitle -%}
+      {%- assign display_tagline = parts[1] -%}
+    {%- elsif has_page_desc -%}
+      {%- assign display_tagline = page.description -%}
+    {%- else -%}
+      {%- assign computed_excerpt = page.excerpt | strip_html | normalize_whitespace | truncate: 140 -%}
+      {%- assign display_tagline = computed_excerpt | default: display_tagline -%}
+    {%- endif -%}
+    {%- comment -%}
+    If the computed tagline still equals the global site description (e.g., theme default),
+    but we're rendering a post, prefer a post-specific string.
+    {%- endcomment -%}
+    {%- if is_post and display_tagline == site.description -%}
+      {%- if has_page_subtitle -%}
+        {%- assign display_tagline = page.subtitle -%}
+      {%- elsif has_split_subtitle -%}
+        {%- assign display_tagline = parts[1] -%}
+      {%- elsif has_page_desc -%}
+        {%- assign display_tagline = page.description -%}
+      {%- else -%}
+        {%- assign computed_excerpt = page.excerpt | strip_html | normalize_whitespace | truncate: 140 -%}
+        {%- assign display_tagline = computed_excerpt | default: display_tagline -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%}
+  Ensure homepage shows the site tagline inside the hero regardless of page front matter.
+  {%- endcomment -%}
+  {%- if page.url == '/' or page.permalink == '/' -%}
+    {%- assign display_title = site.hero_title | default: site.title -%}
+    {%- assign display_tagline = site.hero_tagline | default: site.description -%}
+  {%- endif -%}
+
+  <h1 class="project-name">{{ display_title | escape }}</h1>
+  <h2 class="project-tagline">{{ display_tagline | escape }}</h2>
+
+  {%- if site.github.is_user_page or site.github.is_project_page -%}
+    {%- if site.github.is_project_page -%}
+      <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+    {%- endif -%}
+  {%- endif -%}
+</header>

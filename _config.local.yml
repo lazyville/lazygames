@@ -1,0 +1,5 @@
+baseurl: ""
+url: "http://localhost:4000"
+repository: lazyville/lazygames
+exclude:
+  - vendor

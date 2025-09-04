@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "GateRun — tactical wall mazes on a 7×7 board"
+title: "GateRun"
+subtitle: "tactical wall mazes on a 7×7 board"
 date: 2025-09-03 10:15:00 -0700
 categories: [game-ideas]
 tags: [turn-based, strategy, spa, ai, puzzle]
